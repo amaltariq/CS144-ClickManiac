@@ -49,8 +49,9 @@ targeting = {
 # Define how long the ad will run
 
 today = datetime.date.today()
+
 start_time = str(today + datetime.timedelta(hours=4))
-end_time = str(today + datetime.timedelta(weeks=10))
+end_time = str(today + datetime.timedelta(hours=10))
 
 adset = AdSet(parent_id=my_id)
 campaign_id = '23842548820110548'
@@ -62,6 +63,7 @@ adset.update({
 	AdSet.Field.daily_budget: 200,
 	AdSet.Field.billing_event: AdSet.BillingEvent.impressions,
 	AdSet.Field.optimization_goal: AdSet.OptimizationGoal.reach,
+	AdSet.Field.bid_amount: 200,
 	AdSet.Field.targeting: targeting,
 	AdSet.Field.start_time: start_time,
 	AdSet.Field.end_time: end_time,

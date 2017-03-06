@@ -40,7 +40,7 @@ resp = TargetingSearch.search(params=params2)
 
 targeting = {
 	'geo_locations': {
-		'countries': ['Vietnam'],
+		'countries': ['VN'],
 	},
 	'age_min': 13,
 	'age_max': 30,
@@ -66,14 +66,23 @@ adset.update({
 	AdSet.Field.optimization_goal: AdSet.OptimizationGoal.reach,
 	AdSet.Field.billing_event: AdSet.BillingEvent.impressions,
 	AdSet.Field.daily_budget: 200,
+	AdSet.Field.promoted_object: {
+		'page_id':'103185246428488',
+	},
 	AdSet.Field.campaign_id: campaign_id,
 	AdSet.Field.targeting: targeting,
 	AdSet.Field.is_autobid: True,
+	AdSet.Field.pacing_type: ['day_parting'],
+	AdSet.Field.adset_schedule: {
+		'start_minute': 60,
+		'end_minute': 540,
+		'days': [0, 1, 2, 3, 4, 5, 6],
+	}
 })
 print("Updated adset")
 print(adset)
 adset.remote_create(params={
-	'status': AdSet.Status.paused,
+	'status': AdSet.Status.active,
 })
 
 
