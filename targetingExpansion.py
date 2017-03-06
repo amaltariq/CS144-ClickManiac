@@ -22,12 +22,17 @@ adset.update({
 
 #-----------------------
 # target search code
+params = {
+	'q': 'baseball',
+	'type': 'adinterest'
+}
+
 resp = TargetingSearch.search(params=params)
 print(resp[0])
 #'''
 targeting = {
 	'geo_locations': {
-		'countries': ['US'],
+		'countries': ['Vietnam'],
 	},
 	'age_min': 13,
 	'age_max': 30,
@@ -57,7 +62,6 @@ adset.update({
 	AdSet.Field.daily_budget: 200,
 	AdSet.Field.billing_event: AdSet.BillingEvent.impressions,
 	AdSet.Field.optimization_goal: AdSet.OptimizationGoal.reach,
-	AdSet.Field.bid_amount: 200,
 	AdSet.Field.targeting: targeting,
 	AdSet.Field.start_time: start_time,
 	AdSet.Field.end_time: end_time,
