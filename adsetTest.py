@@ -29,48 +29,124 @@ my_id = ad_accounts[0]["id"]
 # create an ad set.
 # define target audience
 params = {
-	'type': 'adgeolocationmeta',
-	'zips': ['US:91126','US:95014'],
-	'location_types':['zip'],
+    'type': 'adgeolocationmeta',
+    'zips': ['US:91126','US:95014'],
+    'location_types':['zip'],
 }
 params1 = {
-	'type': 'adinterestvalid',
-	'interest_list':[ 'Charity and causes', 'Japan'],
+    'type': 'adinterestvalid',
+    'interest_list':[ 'Charity and causes', 'Japan'],
 }
-params2 = {
-	'q': 'charity',
-	'type': 'adinterest'
+params_charity = {
+    'q': 'charity',
+    'type': 'adinterest'
+}
+params_commissues = {
+    'q': 'Community issues',
+    'type': 'adinterest'
+}
+params_volunteering = {
+    'q': 'Volunteering',
+    'type': 'adinterest'
 }
 
-resp = TargetingSearch.search(params=params2)
+params_nonprofitorg = {
+    'q': 'Nonprofit organization',
+    'type': 'adinterest'
+}
+
+params_animal = {
+    'q': 'animals',
+    'type': 'adinterest'
+}
+params_disneychannel = {
+    'q': 'Disney Channel',
+    'type': 'adinterest'
+}
+params_disneyprincess = {
+    'q': 'Disney Princess',
+    'type': 'adinterest'
+}
+params_frozenmovie = {
+    'q': 'Frozen (2013 film)',
+    'type': 'adinterest'
+}
+params_frozenfranchise = {
+    'q': 'Frozen (franchise)',
+    'type': 'adinterest'
+}
+
+
+int_charity = TargetingSearch.search(params=params_charity)
+int_commissues = TargetingSearch.search(params=params_commissues)
+int_volunteering = TargetingSearch.search(params=params_volunteering)
+int_nonprofitorg = TargetingSearch.search(params=params_nonprofitorg)
+
+int_animal = TargetingSearch.search(params=params_animal)
+int_disneychannel = TargetingSearch.search(params=params_disneychannel)
+int_disneyprincess = TargetingSearch.search(params=params_disneyprincess)
+int_frozenmovie = TargetingSearch.search(params=params_frozenmovie)
+int_frozenfranchise = TargetingSearch.search(params=params_frozenfranchise)
 
 targeting = {
-	'geo_locations': {
-		'countries': ['VN'],
-	},
-	'age_min': 13,
-	'age_max': 30,
-	'interests': [
-		{
-			# Charity and causes
-			'id': resp[0]["id"],
-			'name': resp[0]["name"]
-		},
-	],
+    'geo_locations': {
+        'cities' : [{'key':'1037239', 'radius':12, 'distance_unit':'mile'}]
+        #'custom_locations': [
+        #    {
+        #        'latitude': 77.209, 
+        #        'longitude': 22.6267,
+        #        'radius': 50,
+        #        'distance_unit': 'mile',
+        #    },
+        #],
+        #'location_types':['recent', 'home'],
+    },
+    'age_min': 13,
+    'age_max': 25,
+    'genders': 2,
+    'flexible_spec': [
+      {
+        # Interested in one of the below issues
+        'interests': [
+            {'id': int_charity[0]['id'],'name': int_charity[0]['name']},
+            {'id': int_commissues[0]['id'], 'name': int_commissues[0]['name']},
+            {'id': int_volunteering[0]['id'], 'name': int_volunteering[0]['name']},
+            {'id': int_nonprofitorg[0]['id'], 'name': int_nonprofitorg[0]['name']},
+            {'id': int_disneychannel[0]['id'], 'name': int_disneychannel[0]['name']},
+            {'id': int_disneychannel[1]['id'], 'name': int_disneychannel[1]['name']},
+            {'id': int_disneychannel[6]['id'], 'name': int_disneychannel[6]['name']},
+            {'id': int_disneyprincess[0]['id'], 'name': int_disneyprincess[0]['name']},
+            {'id': int_frozenmovie[0]['id'], 'name': int_frozenmovie[0]['name']},
+            {'id': int_frozenfranchise[0]['id'], 'name': int_frozenfranchise[0]['name']},],
+        # or friend of someone who's liked the page
+        'friends_of_connections': [
+            {'id':103185246428488},],
+      },
+    ],
+    # Exclude people who've already liked the page
+    #'exclusions': [
+    #  {
+    #    'connections': [{'id':103185246428488},],
+    #  },
+    #],
+    
 }
+
+#print(targeting)
 
 adset = AdSet(parent_id=my_id)
 campaign_id = '23842548820110548'
+
 #campaign = Campaign(campaign_id)
 #campaign.remote_read(fields=[Campaign.Field.name, Campaign.Field.objective,])
 #print(campaign)
 '''
-	AdSet.Field.pacing_type: ['day_parting'],
-	AdSet.Field.adset_schedule: {
-		'start_minute': 60,
-		'end_minute': 540,
-		'days': [0, 1, 2, 3, 4, 5, 6],
-	}
+    AdSet.Field.pacing_type: ['day_parting'],
+    AdSet.Field.adset_schedule: {
+        'start_minute': 60,
+        'end_minute': 540,
+        'days': [0, 1, 2, 3, 4, 5, 6],
+    }
 
 today = datetime.date.today()
 '''
@@ -78,27 +154,32 @@ today = datetime.date.today()
 my_page_id = '103185246428488'
 # Update adset
 
-#	AdSet.Field.start_time: str(datetime.datetime(year=2017, month=3, day=6, hour=1, minute=36)),
-#	AdSet.Field.end_time: str(datetime.datetime(year=2017, month=3, day=6, hour=6, minute=0)),
+#   AdSet.Field.start_time: str(datetime.datetime(year=2017, month=3, day=6, hour=1, minute=36)),
+#   AdSet.Field.end_time: str(datetime.datetime(year=2017, month=3, day=6, hour=6, minute=0)),
 
 adset.update({
-	AdSet.Field.name: 'My AdSet',
-	AdSet.Field.optimization_goal: AdSet.OptimizationGoal.reach,
-	AdSet.Field.billing_event: AdSet.BillingEvent.impressions,
-	AdSet.Field.daily_budget: 200,
-	AdSet.Field.promoted_object: {
-		'page_id': my_page_id,
-	},
-	AdSet.Field.campaign_id: campaign_id,
-	AdSet.Field.targeting: targeting,
-	AdSet.Field.is_autobid: True,
+    AdSet.Field.name: 'Amal made an adset- USE THIS ONE CATHY',
+    AdSet.Field.optimization_goal: AdSet.OptimizationGoal.reach,
+    AdSet.Field.billing_event: AdSet.BillingEvent.impressions,
+    AdSet.Field.daily_budget: 200,
+    AdSet.Field.promoted_object: {
+        'page_id': my_page_id,
+    },
+    AdSet.Field.campaign_id: campaign_id,
+    AdSet.Field.targeting: targeting,
+    AdSet.Field.is_autobid: True,
 
 })
+
+
+
 print("Updated adset")
 adset.remote_create(params={
-	'status': AdSet.Status.active,
+    'status': AdSet.Status.active,
 })
+print("remote created adset")
 
+'''
 a = adset.remote_read(fields=[AdSet.Field.id])
 #my_adset_id = a["id"]
 my_adset_id = "23842548820110548"
@@ -110,7 +191,7 @@ account = AdAccount(my_id)
 images = account.get_ad_images()
 #print(images)
 
-image_path = 'begging-hands.jpg'
+image_path = '/Users/SeemaMacbook/Desktop/AmalsWork/CS:EE144/Projects/ClickManiac/clickmaniac-ads/homeless_services/begging-hands.jpg'
 
 image = AdImage(parent_id=my_id)
 image[AdImage.Field.filename] = image_path
@@ -138,7 +219,7 @@ creative.remote_create()
 c = creative.remote_read()
 my_creative_id = c["id"]
 print(c)
-'''
+
 print("creative id", my_creative_id)
 
 # Create Facebook ad with Ad
@@ -146,14 +227,13 @@ ad = Ad(parent_id=my_id)
 ad[Ad.Field.name] = "Helping Hand Ad"
 ad[Ad.Field.adset_id] = my_adset_id
 ad[Ad.Field.creative] = {
-	'creative_id':my_creative_id,
+    'creative_id':my_creative_id,
 }
 
 # Activate ad
 ad.remote_create(params={
-	'status': Ad.Status.active,
+    'status': Ad.Status.active,
 })
 
 print("activated adset")
-
 '''
