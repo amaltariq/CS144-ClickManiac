@@ -117,6 +117,7 @@ targeting = {
         # Interested in one of the below issues
         'interests': [
             {'id': int_charity[0]['id'],'name': int_charity[0]['name']},
+            {'id': int_animal[0]['id'],'name': int_animal[0]['name']},
             {'id': int_commissues[0]['id'], 'name': int_commissues[0]['name']},
             {'id': int_volunteering[0]['id'], 'name': int_volunteering[0]['name']},
             {'id': int_nonprofitorg[0]['id'], 'name': int_nonprofitorg[0]['name']},],
